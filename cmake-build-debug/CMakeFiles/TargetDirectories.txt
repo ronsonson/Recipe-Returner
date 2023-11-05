@@ -1,0 +1,3 @@
+C:/Users/george/CLionProjects/RecipeUI/cmake-build-debug/CMakeFiles/RecipeUI.dir
+C:/Users/george/CLionProjects/RecipeUI/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/george/CLionProjects/RecipeUI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
