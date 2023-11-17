@@ -6,6 +6,7 @@
 #define RECIPEUI_RECIPE_H
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 
@@ -24,9 +25,10 @@ void DisplayParameters();
 void DisplayIngredients();
 void DisplayHelp();
 void DisplayMeal();
-
+void Search();
 
 string GetUserInput();
+void writeToFile(string meal);
 
 
 #endif //RECIPEUI_RECIPE_H

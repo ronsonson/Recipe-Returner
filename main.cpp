@@ -26,6 +26,7 @@ int main()
                 DisplayHelp();
 
             } else if (userCommand == SEARCH) {
+                Search();
 
             } else if (userCommand == MENU) {
                 DisplayUI();

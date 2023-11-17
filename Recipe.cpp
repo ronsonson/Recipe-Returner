@@ -3,13 +3,25 @@
 //
 
 #include "Recipe.h"
-string mealArray[10] = {"Pancakes", "Breakfast Burritos", "Bean and Cheese Burritos", "BLT Sandwich",
-                          "Quesadillas", "Tacos", "Burgers", "Sloppy Joes", "Rice Bowls", "French Fries"};
+string mealArray[10] = {"pancakes", "breakfast-burritos", "bean-and-cheese burritos", "BLT-sandwich",
+                          "quesadillas", "tacos", "burgers", "sloppy-joes", "rice-bowls", "french-fries"};
 
 string parameterArray[3] = {"", "", ""};
-string ingredientArray[30] = {"flour", "tortillas", "beans", "bread", "bacon", "cheese", "potatoes", "ground Beef", "buns", "rice", "milk", "vegetable oil"
-, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+string ingredientArray[30] = {"flour", "tortillas", "beans", "bread", "bacon", "cheese", "potatoes", "ground-beef", "buns", "rice", "milk", "vegetable-oil"
+, "eggs", "tomatoes", "lettuce", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+string mealRecipeArray[20][5] = {"pancakes", "flour", "milk", "eggs","",
+                                 "breakfast-burritos", "eggs", "tortillas", "potatoes", "cheese",
+                                 "bean-and-cheese-burritos", "beans", "cheese", "tortillas", "",
+                                 "BLT-sandwich", "bread", "bacon", "tomato", "lettuce",
+                                 "quesadillas", "tortillas", "cheese", "", "",
+                                 "tacos", "tortillas", "rice", "beans", "ground-beef",
+                                 "burgers", "buns", "ground-beef", "cheese", "lettuce",
+                                 "sloppy-joes", "buns", "cheese", "ground-beef", "",
+                                 "rice-bowls", "rice", "beans", "tomatoes", "lettuce",
+                                 "french-fries", "potatoes", "vegetable-oil", "", ""
 
+                                 };
+string returnArray[10];
 void DisplayIntro()
 {
     cout << "Welcome to the Recipe Returner! \nThis program is designed to help you decide what you want to eat! Or perhaps use up pesky ingredients laying around that you are unsure what to make with!" << endl;
@@ -146,4 +158,89 @@ void DisplayMeal()
     {
         cout << mealArray[i] << endl;
     }
+}
+void Search()
+{
+    if (parameterArray[0].empty())
+    {
+        cout << "No search parameters. Use 'parameters' command to add parameters before searching" << endl;
+
+    }
+    else
+    {
+        int n = 0;
+        for (int i =0; i < 10; i++)
+        {
+            for (int k =0; k < 5; k++)
+            {
+                for(int j =0; j <3; j++)
+                {
+                    if (mealRecipeArray[i][k] == parameterArray[j] and parameterArray[j] != "")
+                    {
+                        if (returnArray[n-1] != mealRecipeArray[i][0] )
+                        {
+                            returnArray[n] = mealRecipeArray[i][0];
+                            n++;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        cout << "Search results are:" << endl;
+        for (int i =0; i < 10; i++)
+        {
+            if (returnArray[i] != "")
+            {
+
+                cout << i+1 << ". " << returnArray[i] << endl;
+
+            }
+        }
+        bool done = false;
+        bool valid;
+        while (!done) {
+            cout << "You may enter one of the search result meals as a command to open an external recipe for it.\n"
+                    "(Recommended: You can simply copy and paste the name of the meal and hit enter)"
+                    " Or you can input 'menu' to return to the main menu" << endl;
+            do
+            {
+                 valid = false;
+                string userInput = GetUserInput();
+
+                for (int i=0 ; i < 10; i++)
+                {
+                    if (userInput == returnArray[i] or userInput == "menu")
+                    {
+                        valid = true;
+                    }
+                }
+                    if (!valid)
+                    {
+                        cout << "Invalid command, try again." << endl;
+                        valid = false;
+                    }
+
+                if (userInput == "menu")
+                {
+                    done = true;
+                    cout <<"Returning to main menu..." << endl;
+                }
+                else if (valid and !done)
+                {
+                    writeToFile(userInput);
+                }
+            } while (!valid);
+        }
+    }
+
+}
+void writeToFile(string meal)
+{
+ofstream mealOut;
+mealOut.open("recipe-service.txt");
+mealOut << meal;
+mealOut.close();
 }
