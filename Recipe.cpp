@@ -231,16 +231,28 @@ void Search()
                 else if (valid and !done)
                 {
                     writeToFile(userInput);
+
+
                 }
             } while (!valid);
         }
     }
-
 }
-void writeToFile(string meal)
+void writeToFile(const string& meal)
 {
-ofstream mealOut;
-mealOut.open("recipe-service.txt");
-mealOut << meal;
-mealOut.close();
+    // put meal into file
+    ofstream mealOut;
+    mealOut.open("recipe-service.txt");
+    mealOut << meal;
+    mealOut.close();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    // get link from file
+    ifstream linkIn;
+    string link;
+    linkIn.open("recipe-service.txt");
+    linkIn >> link;
+    cout << "Requested recipe for " << meal << endl;
+    cout << "Copy and paste this link into your browser: " << link << endl;
+    linkIn.clear();
+    linkIn.close();
 }

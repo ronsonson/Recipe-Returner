@@ -28,7 +28,7 @@ void DisplayMeal();
 void Search();
 
 string GetUserInput();
-void writeToFile(string meal);
+void writeToFile(const string& meal);
 
 
 #endif //RECIPEUI_RECIPE_H
