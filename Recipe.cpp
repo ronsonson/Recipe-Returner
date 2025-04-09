@@ -2,14 +2,15 @@
 // Created by Ronson on 10/25/2023.
 //
 
+
 #include "Recipe.h"
-string mealArray[10] = {"pancakes", "breakfast-burritos", "bean-and-cheese burritos", "BLT-sandwich",
+string mealArray[MAX_MEALS] = {"pancakes", "breakfast-burritos", "bean-and-cheese burritos", "BLT-sandwich",
                           "quesadillas", "tacos", "burgers", "sloppy-joes", "rice-bowls", "french-fries"};
 
-string parameterArray[3] = {"", "", ""};
-string ingredientArray[30] = {"flour", "tortillas", "beans", "bread", "bacon", "cheese", "potatoes", "ground-beef", "buns", "rice", "milk", "vegetable-oil"
-, "eggs", "tomatoes", "lettuce", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
-string mealRecipeArray[20][5] = {"pancakes", "flour", "milk", "eggs","",
+string parameterArray[MAX_PARAMETERS] = {"", "", ""};
+string ingredientArray[MAX_INGREDIENTS] = {"flour", "tortillas", "beans", "bread", "bacon", "cheese", "potatoes", "ground-beef", "buns", "rice", "milk", "vegetable-oil"
+, "eggs", "tomatoes", "lettuce"};
+string mealRecipeIngredientArray[MAX_RECIPES][MAX_RECIPE_INGREDIENTS] = {"pancakes", "flour", "milk", "eggs","",
                                  "breakfast-burritos", "eggs", "tortillas", "potatoes", "cheese",
                                  "bean-and-cheese-burritos", "beans", "cheese", "tortillas", "",
                                  "BLT-sandwich", "bread", "bacon", "tomato", "lettuce",
@@ -21,7 +22,7 @@ string mealRecipeArray[20][5] = {"pancakes", "flour", "milk", "eggs","",
                                  "french-fries", "potatoes", "vegetable-oil", "", ""
 
                                  };
-string returnArray[10];
+string returnArray[MAX_RETURN_ARRAY];
 void DisplayIntro()
 {
     cout << "Welcome to the Recipe Returner! \nThis program is designed to help you decide what you want to eat! Or perhaps use up pesky ingredients laying around that you are unsure what to make with!" << endl;
@@ -36,7 +37,6 @@ string GetUserInput()
 {
     string userCommand;
 
-        cout << "Input a command: " << endl;
         cin >> userCommand;
         for (int i = 0; i < userCommand.length(); i++) {
             userCommand[i] = tolower(userCommand[i]);
@@ -55,7 +55,7 @@ void DisplayParameters()
 
 
     cout << "Current search parameters are: " << endl;
-    for(int i =0; i < 3; i++)
+    for(int i =0; i < MAX_PARAMETERS; i++)
     {
         cout << "Parameter "<< i+1 << ": " << parameterArray[i] << endl;
     }
@@ -67,13 +67,9 @@ void DisplayParameters()
     {
         bool added = false;
         valid = true;
-        cin >> userInput;
-        for (int i = 0; i < userInput.length(); i++)
-        {
-            userInput[i] = tolower(userInput[i]);
-        }
+        string parameterInput = GetUserInput();
 
-        for (int i =0; i <30; i++)
+        for (int i =0; i <MAX_INGREDIENTS; i++)
         {
             bool done = false;
             if (userInput == ingredientArray[i])
@@ -102,7 +98,7 @@ void DisplayParameters()
         }
         if (userInput == "clear")
         {
-            for (int i =0; i<3; i++)
+            for (int i =0; i<MAX_PARAMETERS; i++)
             {
                 parameterArray[i] = "";
             }
@@ -133,7 +129,7 @@ void DisplayIngredients()
 {
     cout << "Current ingredients recognized in the database are: " << endl;
 
-    for (int i =0; i<12; i++)
+    for (int i =0; i < MAX_INGREDIENTS; i++)
     {
         cout << ingredientArray[i] << endl;
     }
@@ -154,7 +150,7 @@ void DisplayMeal()
 {
     cout << "Current meals in the database are: " << endl;
 
-    for (int i =0; i<10; i++)
+    for (int i =0; i<MAX_MEALS; i++)
     {
         cout << mealArray[i] << endl;
     }
@@ -169,17 +165,17 @@ void Search()
     else
     {
         int n = 0;
-        for (int i =0; i < 10; i++)
+        for (int i =0; i < MAX_RECIPES; i++)
         {
-            for (int k =0; k < 5; k++)
+            for (int k =0; k < MAX_RECIPE_INGREDIENTS; k++)
             {
-                for(int j =0; j <3; j++)
+                for(int j =0; j < MAX_PARAMETERS; j++)
                 {
-                    if (mealRecipeArray[i][k] == parameterArray[j] and parameterArray[j] != "")
+                    if (mealRecipeIngredientArray[i][k] == parameterArray[j] and parameterArray[j] != "")
                     {
-                        if (returnArray[n-1] != mealRecipeArray[i][0] )
+                        if (returnArray[n-1] != mealRecipeIngredientArray[i][0] )
                         {
-                            returnArray[n] = mealRecipeArray[i][0];
+                            returnArray[n] = mealRecipeIngredientArray[i][0];
                             n++;
                         }
                     }
@@ -190,7 +186,7 @@ void Search()
 
 
         cout << "Search results are:" << endl;
-        for (int i =0; i < 10; i++)
+        for (int i =0; i < MAX_RETURN_ARRAY; i++)
         {
             if (returnArray[i] != "")
             {
@@ -210,7 +206,7 @@ void Search()
                  valid = false;
                 string userInput = GetUserInput();
 
-                for (int i=0 ; i < 10; i++)
+                for (int i=0 ; i < MAX_RETURN_ARRAY; i++)
                 {
                     if (userInput == returnArray[i] or userInput == "menu")
                     {

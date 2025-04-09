@@ -6,12 +6,12 @@ int main()
 {
     bool valid = true;
     DisplayIntro();
-    do {
 
 
         do {
             DisplayUI();
              valid = true;
+             cout << "Please enter a command: " << endl;
             string userCommand = GetUserInput();
 
             if (userCommand == MEAL) {
@@ -33,7 +33,7 @@ int main()
 
             } else if (userCommand == EXIT) {
                 cout << "Thank you for using the Recipe Returner" << endl;
-                userExit = true;
+                return 0;
             } else {
                 cout << "invalid command, try again" << endl;
                 valid = false;
@@ -41,6 +41,5 @@ int main()
             }
         } while (!valid);
 
-    }while (!userExit);
     return 0;
 }
